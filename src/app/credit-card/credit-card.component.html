@@ -1,0 +1,56 @@
+<div class="main">
+  <div class="credit-card-container">
+    <h3 class="title">Enter your credit card information</h3>
+
+    <form [formGroup]="creditCardForm">
+      <!-- Name Field -->
+      <app-input id="name" inputLabel="Name" formControlName="name">
+        <div *ngIf="hasError('name', 'required')">This field is required</div>
+      </app-input>
+
+      <!-- Card Number -->
+      <div class="margin-bottom-16">
+        <input
+        type="text"
+        id="card-number"
+        class="input-element"
+        [mask]="ccFormat"
+        (blur)="onCardNumberBlur()"
+        [class.is-invalid]="hasError('cardNumber', 'invalid')"
+        formControlName="cardNumber"
+        placeholder="Card Number" />
+        <div matSuffix *ngIf="cardType" class="input-cc-icon-wrapper">
+          <img alt="image" src="/assets/cc-logos/cc-{{cardType}}.png" width=50 height=30/>
+        </div>
+        <div class="error-message" *ngIf="hasError('cardNumber', 'invalid')">Card Number is invalid</div>
+      </div>
+
+      <!-- CVV Field -->
+      <app-input id="cvv" [maxlength]="cvvMaxLength" [numbersOnly]="true" inputLabel="CVV2" formControlName="cvv">
+        <div *ngIf="hasError('cvv', 'required')">This field is required</div>
+        <div *ngIf="hasError('cvv', 'minlength')">CVV is invalid</div>
+      </app-input>
+
+      <div class="expiration-date">
+        <!-- Expiry Month -->
+        <app-input id="expMonth" (blurEvent)="validateDate()" [maxlength]="2" [numbersOnly]="true" inputLabel="Exp. Month" formControlName="expMonth">
+          <div *ngIf="hasError('expMonth', 'required')">This field is required</div>
+          <div *ngIf="hasError('expMonth', 'invalid')">Month is not valid</div>
+        </app-input>
+
+        <!-- Expiry Year -->
+        <app-input id="expYear" (blurEvent)="validateDate()" [maxlength]="4" [numbersOnly]="true" inputLabel="Exp. Year" formControlName="expYear">
+          <div *ngIf="hasError('expYear', 'required')">This field is required</div>
+          <div *ngIf="hasError('expYear', 'invalid')">Year is not valid</div>
+        </app-input>
+      </div>
+
+      <div class="flex-center margin-bottom-16">
+        <img src="/assets/cc-logos/cc-visa.png" />
+        <img src="/assets/cc-logos/cc-amex.png" />
+      </div>
+
+      <button type="submit" class="submit-btn" (click)="onSubmitPayment()">Submit</button>
+    </form>
+  </div>
+</div>
