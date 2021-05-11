@@ -1,0 +1,5 @@
+<input type="text" [id]="id" class="input-element" [formControl]="ngControl.control"
+          [class.is-invalid]="ngControl.dirty && ngControl.invalid" (blur)="onBlur($event)" [appNumbersOnly]="numbersOnly" [maxlength]="maxlength" [placeholder]="inputLabel" />
+<div class="error-message">
+  <ng-content></ng-content>
+</div>
